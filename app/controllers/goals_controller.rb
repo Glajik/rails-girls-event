@@ -58,6 +58,8 @@ class GoalsController < ApplicationController
       Goal.completed
     elsif params[:filter] == 'incomplete'
       Goal.incomplete
+    elsif params[:filter] == 'today'
+      Goal.today
     else
       Goal.all
     end

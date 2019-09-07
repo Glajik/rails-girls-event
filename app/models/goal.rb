@@ -16,6 +16,7 @@ class Goal < ApplicationRecord
 
   scope :completed, -> { where(complete: true) }
   scope :incomplete, -> { where(complete: false) }
+  scope :today, -> { where(due_date: Date.today) }
 
   private
 
