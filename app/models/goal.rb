@@ -10,7 +10,7 @@ class Goal < ApplicationRecord
   validates :due_date,
             presence: true
 
-  validate :due_date_cannot_be_in_the_past, :due_date_year_cannot_be_more_than_allowable, if: :due_date_changed?
+  validate :due_date_cannot_be_in_the_past, :due_date_year_cannot_be_more_than_allowable, :title_cannot_be_equals_gitler, if: :due_date_changed?
 
   enum priority: { low: 0, medium: 1, high: 2 }
 
@@ -18,6 +18,12 @@ class Goal < ApplicationRecord
   scope :incomplete, -> { where(complete: false) }
 
   private
+
+  def title_cannot_be_equals_gitler
+    if title == 'Гитлер'
+      errors.add(:title, 'Придумай-ка название получше')
+    end
+  end
 
   def due_date_cannot_be_in_the_past
     if due_date.present? && due_date < Time.zone.today
